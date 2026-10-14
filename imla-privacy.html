@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy Policy – Imla Practice</title>
+<meta name="description" content="Privacy policy for Imla Practice, an Urdu and English spelling practice app by Tinvale Apps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #FBFBF6;
+    --ink: #24303A;
+    --muted: #5C6772;
+    --rule: #D6E2EC;      /* faint blue ruled lines, like an exercise book */
+    --margin: #C9504A;    /* the red margin line */
+    --link: #1F5E8C;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --paper: #171B1F;
+      --ink: #E4E8EC;
+      --muted: #A3ADB7;
+      --rule: #263039;
+      --margin: #D9706A;
+      --link: #8CC4EE;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    background: var(--paper);
+  }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    background-color: var(--paper);
+    /* ruled lines every 2rem, matching the body line height */
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(2rem - 1px),
+      var(--rule) calc(2rem - 1px),
+      var(--rule) 2rem
+    );
+    font-family: "Literata", Georgia, "Times New Roman", serif;
+    font-size: 1.0625rem;
+    line-height: 2rem;
+    padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+  }
+
+  .page {
+    position: relative;
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem 3.5rem;
+  }
+
+  /* the exercise-book margin line */
+  .page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 2.25rem;
+    width: 2px;
+    background: var(--margin);
+    opacity: 0.75;
+  }
+
+  header {
+    margin-bottom: 2rem;
+  }
+
+  .urdu {
+    font-family: "Noto Nastaliq Urdu", serif;
+    direction: rtl;
+    font-size: 1.6rem;
+    line-height: 4rem;
+    color: var(--margin);
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    line-height: 4rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .meta {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    line-height: 2rem;
+    font-weight: 600;
+    margin: 2rem 0 0;
+  }
+
+  p, ul {
+    margin: 0 0 2rem;
+    max-width: 38rem;
+  }
+
+  ul {
+    padding-left: 1.25rem;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    color: var(--link);
+    text-underline-offset: 0.2em;
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .summary {
+    font-size: 1.125rem;
+  }
+
+  @media (max-width: 30rem) {
+    .page { padding: 3rem 1.25rem 4rem 2.75rem; }
+    .page::before { left: 1.6rem; }
+    h1 { font-size: 1.75rem; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header>
+    <p class="urdu" lang="ur">املا کی مشق</p>
+    <h1>Imla Practice privacy policy</h1>
+    <p class="meta">Tinvale Apps. Effective October 14, 2026.</p>
+  </header>
+
+  <p class="summary">
+    Imla Practice keeps your family's information on your phone. We don't have accounts or servers,
+    and we never see the names, word lists or scores you enter. The only data that leaves your phone
+    is what Google's advertising service needs to show ads.
+  </p>
+
+  <h2>Who we are</h2>
+  <p>
+    Imla Practice is an app that helps parents practise Urdu and English spelling (imla) with their
+    children. It is made by Tinvale Apps, an independent developer. In this policy, "we" means Tinvale Apps
+    and "you" means the person using the app.
+  </p>
+
+  <h2>Information you enter, kept only on your phone</h2>
+  <p>To work, the app stores the following in a database on your device:</p>
+  <ul>
+    <li>Children's names (or nicknames) that you add</li>
+    <li>Word lists you create</li>
+    <li>Practice results: which words were marked correct or wrong, and when</li>
+    <li>Your app settings, such as speech speed and default language</li>
+  </ul>
+  <p>
+    This information is never sent to us or to anyone else. We have no way to access it. It is deleted
+    when you delete a child in the app, clear the app's data, or uninstall the app.
+  </p>
+
+  <h2>Voice</h2>
+  <p>
+    Words are read aloud using the text-to-speech engine installed on your phone, such as Speech Services
+    by Google. Imla Practice uses the voices stored on your device and does not record your voice or your
+    child's voice. The app does not use the microphone.
+  </p>
+
+  <h2>Advertising</h2>
+  <p>
+    Imla Practice is free and shows ads through Google AdMob. To show and measure ads, Google may collect
+    information such as your device's advertising ID, IP address, device type and general location, and
+    information about how ads are viewed and tapped. This is handled by Google under
+    <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>, and you can learn more in
+    <a href="https://policies.google.com/technologies/partner-sites">how Google uses information from apps that use its services</a>.
+  </p>
+  <p>
+    The app only requests family-friendly ads (content rated G), and ads are never shown on the dictation
+    or marking screens.
+  </p>
+  <p>
+    You can reset or delete your advertising ID, or opt out of personalised ads, in your phone's settings
+    under Google, then Ads, or Privacy, then Ads, depending on your device.
+  </p>
+
+  <h2>Users in the European Economic Area, the UK and Switzerland</h2>
+  <p>
+    If you are in these regions, the app asks for your consent before ads use your data, using Google's
+    consent form. You can change your choice at any time in the app under Settings, then Ad privacy settings.
+  </p>
+
+  <h2>Children</h2>
+  <p>
+    Imla Practice is designed to be used by parents and other adults, together with a child. Children's
+    names and results are entered by the adult and stay on the device. We do not knowingly collect personal
+    information from children, and we do not ask children to create accounts or provide information.
+  </p>
+
+  <h2>Internet access</h2>
+  <p>
+    The app works without internet for practice. It uses the internet only to load ads and to show the
+    consent form where required.
+  </p>
+
+  <h2>Changes to this policy</h2>
+  <p>
+    If we change this policy, we will update this page and the effective date above. Significant changes
+    will also be mentioned in the app's release notes on Google Play.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions about this policy? Email
+    <a href="mailto:umarfarooqch57@gmail.com">umarfarooqch57@gmail.com</a>.
+  </p>
+</main>
+</body>
+</html>
