@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Coffee Bean & Tea Leaf Pakistan · 3D demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ECEEE8; --surface:#F6F7F2; --ink:#22170F; --muted:#5A4E44; --line:#CDCDC1;
+  --leaf:#2F5E3A; --crema:#9A6634; --hero:#21160F; --hero-ink:#F3EADF; --hero-muted:#C9B8A6;
+  --btn:#E2B887; --btn-ink:#22170F; --hh:72px;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15100C; --surface:#1E1611; --ink:#F0E7DC; --muted:#BBAA99; --line:#3A2E25;
+    --leaf:#93C59A; --crema:#E0B485; --hero:#0E0A07; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15100C; --surface:#1E1611; --ink:#F0E7DC; --muted:#BBAA99; --line:#3A2E25;
+  --leaf:#93C59A; --crema:#E0B485; --hero:#0E0A07; color-scheme: dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--hh))}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--hero)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--btn); outline-offset:3px; border-radius:6px}
+
+/* Header */
+.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--hero); color:var(--hero-ink); height:var(--hh)}
+.top-in{max-width:1240px; height:100%; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; gap:16px}
+.mark{font-family:var(--display); font-weight:800; font-size:19px; letter-spacing:-.01em; text-decoration:none; line-height:1.15}
+.mark small{display:block; font-family:var(--body); font-weight:500; font-size:13px; color:var(--hero-muted)}
+.top nav{display:flex; gap:22px; font-size:15px}
+.top nav a{text-decoration:none; color:var(--hero-muted); padding:10px 0}
+.top nav a:hover{color:var(--hero-ink)}
+
+/* Scroll story hero */
+.scrolly{height:340vh; background:var(--hero); color:var(--hero-ink); position:relative}
+.sticky{position:sticky; top:calc(env(safe-area-inset-top,0px) + var(--hh)); height:calc(100svh - var(--hh) - env(safe-area-inset-top,0px)); overflow:hidden}
+.stage{position:absolute; inset:0; touch-action:pan-y; cursor:grab}
+.stage:active{cursor:grabbing}
+.stage canvas{display:block; width:100%; height:100%}
+.caps{position:absolute; inset:0; max-width:1240px; margin:0 auto; padding:0 24px; pointer-events:none}
+.cap{position:absolute; left:24px; top:50%; transform:translateY(-50%); width:min(520px,46%); pointer-events:auto}
+.cap h1,.cap h2{font-family:var(--display); font-weight:800; letter-spacing:-.035em; line-height:.95; margin:0 0 22px; font-variation-settings:"opsz" 96}
+.cap h1{font-size:clamp(44px,6.2vw,90px)}
+.cap h2{font-size:clamp(40px,5.2vw,76px)}
+.cap h1 .swap{display:block; color:var(--btn)}
+.cap p{font-size:19px; color:var(--hero-muted); max-width:34ch; margin:0 0 28px}
+.cap-center{left:50%; transform:translate(-50%,-50%); text-align:center; width:min(640px,90%)}
+.cap-center p{margin-left:auto; margin-right:auto}
+.cap-center h2{text-shadow:0 2px 24px rgba(30,15,6,.55)}
+.cap-center p{color:var(--hero-ink); text-shadow:0 1px 14px rgba(30,15,6,.7)}
+.switch{display:inline-flex; padding:5px; border-radius:999px; background:rgba(255,255,255,.08); gap:4px; margin-bottom:28px}
+.switch button{font:600 16px var(--body); border:0; border-radius:999px; padding:11px 22px; min-height:44px; cursor:pointer; background:transparent; color:var(--hero-muted)}
+.switch button[aria-pressed="true"]{background:var(--btn); color:var(--btn-ink)}
+.actions{display:flex; gap:12px; flex-wrap:wrap}
+.btn{display:inline-flex; align-items:center; min-height:48px; padding:0 24px; border-radius:999px; font-weight:600; text-decoration:none; background:var(--btn); color:var(--btn-ink)}
+.btn.ghost{background:transparent; color:var(--hero-ink); box-shadow:inset 0 0 0 1.5px rgba(243,234,223,.45)}
+.scroll-hint{position:absolute; bottom:22px; left:50%; transform:translateX(-50%); font-size:14px; color:var(--hero-muted); display:flex; flex-direction:column; align-items:center; gap:6px; pointer-events:none}
+.scroll-hint i{width:2px; height:28px; background:linear-gradient(var(--hero-muted),transparent); animation:drip 1.8s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(.2); transform-origin:top}50%{transform:scaleY(1); transform-origin:top}100%{transform:scaleY(1); opacity:0}}
+@media (prefers-reduced-motion: reduce){ .scroll-hint i{animation:none} }
+.no3d .stage{display:grid; place-items:center; color:var(--hero-muted)}
+
+/* Sections */
+section.band{max-width:1240px; margin:0 auto; padding:96px 24px}
+h2.sec{font-family:var(--display); font-weight:800; font-size:clamp(34px,4.4vw,56px); letter-spacing:-.03em; line-height:1; margin:0 0 14px}
+.intro{color:var(--muted); max-width:52ch; margin:0 0 48px}
+
+/* Menu with 3D glass */
+.menu-head{display:flex; justify-content:space-between; align-items:end; gap:24px; flex-wrap:wrap; margin-bottom:40px}
+.menu-head .intro{margin:0}
+.menu-switch{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); margin:0}
+.menu-switch button{color:var(--muted)}
+.menu-switch button[aria-pressed="true"]{background:var(--ink); color:var(--bg)}
+.menu-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:56px; align-items:start}
+.glass-wrap{position:sticky; top:calc(env(safe-area-inset-top,0px) + var(--hh) + 24px); height:min(600px,72vh); border-radius:32px; background:var(--surface); box-shadow:inset 0 0 0 1px var(--line); overflow:hidden; touch-action:pan-y; cursor:grab}
+.glass-wrap canvas{display:block; width:100%; height:100%}
+.glass-label{position:absolute; left:24px; right:24px; bottom:20px; display:flex; justify-content:space-between; align-items:end; gap:12px; pointer-events:none}
+.glass-label b{font-family:var(--display); font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.1}
+.glass-label span{font-size:14px; color:var(--muted)}
+.drinks{list-style:none; margin:0; padding:0}
+.drinks li{border-top:1px solid var(--line)}
+.drinks li:last-child{border-bottom:1px solid var(--line)}
+.drink{display:grid; grid-template-columns:20px 1fr auto; gap:4px 14px; width:100%; text-align:left; background:none; border:0; color:inherit; font:inherit; padding:20px 12px; cursor:pointer; border-radius:14px; align-items:center}
+.drink:hover{background:var(--surface)}
+.drink[aria-pressed="true"]{background:var(--surface)}
+.drink .dot{width:16px; height:16px; border-radius:50%; box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.25)}
+.drink .nm{font-family:var(--display); font-weight:600; font-size:23px; letter-spacing:-.01em; line-height:1.25}
+.drink[aria-pressed="true"] .nm{color:var(--leaf)}
+.drink .tag{font-size:13px; font-weight:600; color:var(--leaf)}
+.drink .ds{grid-column:2 / -1; color:var(--muted); font-size:16px; max-width:46ch}
+
+/* Story timeline */
+.timeline{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:28px; position:relative}
+.timeline::before{content:""; position:absolute; left:0; right:0; top:58px; height:2px; background:var(--line)}
+.timeline li{position:relative; padding-top:82px}
+.timeline li::before{content:""; position:absolute; top:51px; left:0; width:16px; height:16px; border-radius:50%; background:var(--bg); box-shadow:inset 0 0 0 4px var(--crema)}
+.timeline li:last-child::before{background:var(--leaf); box-shadow:none}
+.timeline .yr{position:absolute; top:0; left:0; font-family:var(--display); font-weight:800; font-size:34px; letter-spacing:-.02em; line-height:1.2}
+.timeline .yr span{font-size:16px; font-weight:600; color:var(--muted); margin-right:4px}
+.timeline p{margin:0; color:var(--muted); font-size:16px}
+.timeline strong{display:block; color:var(--ink); font-weight:600}
+
+/* Stores */
+.stores-wrap{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.cities{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:40px}
+.city h3{font-family:var(--display); font-weight:800; font-size:32px; letter-spacing:-.02em; margin:0 0 12px; line-height:1.1}
+.city ul{list-style:none; margin:0; padding:0}
+.city li{padding:12px 0; border-top:1px solid var(--line)}
+.city li b{display:block; font-weight:600}
+.city li span{color:var(--muted); font-size:15px}
+.placeholder{color:var(--crema); font-weight:600}
+.also{margin:40px 0 0; color:var(--muted)}
+
+footer{max-width:1240px; margin:0 auto; padding:40px 24px 56px; display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; color:var(--muted); font-size:15px}
+footer p{margin:0; max-width:60ch}
+
+@media (max-width:900px){
+  .cap{left:20px; right:20px; width:auto; top:auto; bottom:28px; transform:none}
+  .cap-hero{background:linear-gradient(transparent, var(--hero) 22%); padding-top:48px; margin:0 -20px -28px; padding:48px 20px 28px; left:0; right:0}
+  .cap-center{left:20px; right:20px; width:auto; top:50%; bottom:auto; transform:translateY(-50%)}
+  .cap h1{font-size:44px}
+  .cap p{font-size:17px; margin-bottom:20px}
+  .switch{margin-bottom:18px}
+  .menu-grid{grid-template-columns:1fr; gap:24px}
+  .glass-wrap{position:relative; top:0; height:380px}
+  .timeline{grid-template-columns:1fr; gap:0}
+  .timeline::before{left:7px; right:auto; top:0; bottom:0; width:2px; height:auto}
+  .timeline li{padding:4px 0 32px 40px}
+  .timeline li::before{top:12px; left:0}
+  .timeline .yr{position:static; display:block}
+  .cities{grid-template-columns:1fr}
+  section.band{padding:64px 20px}
+  .scroll-hint{display:none}
+}
+@media (max-width:520px){ .top nav{display:none} }
+</style>
+</head>
+<body data-mode="coffee">
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="#top">The Coffee Bean &amp; Tea Leaf<small>Pakistan</small></a>
+    <nav aria-label="Main">
+      <a href="#menu">Menu</a>
+      <a href="#story">Our story</a>
+      <a href="#stores">Stores</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="scrolly" id="scrolly">
+    <div class="sticky" id="sticky">
+      <div class="stage" id="stage" role="img" aria-label="A 3D cup with floating coffee beans. Scrolling moves the camera above the cup and down into the drink."></div>
+      <div class="caps">
+        <div class="cap cap-hero" data-cap="0">
+          <h1>California brewed,<span class="swap" id="swap">poured in Pakistan.</span></h1>
+          <p id="lead">Handpicked 100% arabica beans, roasted for espresso, lattes and our Ice Blended drinks.</p>
+          <div class="switch" role="group" aria-label="Show coffee or tea">
+            <button type="button" data-set-mode="coffee" aria-pressed="true">Coffee</button>
+            <button type="button" data-set-mode="tea" aria-pressed="false">Tea</button>
+          </div>
+          <div class="actions">
+            <a class="btn" href="#menu">See the menu</a>
+            <a class="btn ghost" href="#stores">Find a store</a>
+          </div>
+        </div>
+        <div class="cap" data-cap="1">
+          <h2 id="cap1h">Pulled shot by shot.</h2>
+          <p id="cap1p">Every espresso drink starts with a fresh shot of our espresso roast, pulled when you order.</p>
+        </div>
+        <div class="cap cap-center" data-cap="2">
+          <h2>Now pick your cup.</h2>
+          <p>Keep scrolling to the menu and see each drink take shape.</p>
+        </div>
+      </div>
+      <div class="scroll-hint" id="hint" aria-hidden="true">Scroll<i></i></div>
+    </div>
+  </div>
+
+  <section class="band" id="menu" aria-labelledby="menu-h">
+    <div class="menu-head">
+      <div>
+        <h2 class="sec" id="menu-h">On the counter</h2>
+        <p class="intro">Pick a drink to see it poured. Every drink is made to order at the bar.</p>
+      </div>
+      <div class="switch menu-switch" role="group" aria-label="Menu category">
+        <button type="button" data-set-mode="coffee" aria-pressed="true">Coffee</button>
+        <button type="button" data-set-mode="tea" aria-pressed="false">Tea</button>
+      </div>
+    </div>
+    <div class="menu-grid">
+      <div class="glass-wrap" id="glass" role="img" aria-label="3D preview of the selected drink in a glass">
+        <div class="glass-label" aria-live="polite"><b id="drinkName">Original Ice Blended</b><span>Drag to turn</span></div>
+      </div>
+      <div>
+        <ul class="drinks" id="list-coffee" data-menu="coffee"></ul>
+        <ul class="drinks" id="list-tea" data-menu="tea" hidden></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="story" aria-labelledby="story-h">
+    <h2 class="sec" id="story-h">From Los Angeles to F-6</h2>
+    <p class="intro">Six decades of coffee and tea, and a growing list of Pakistani cities since 2017.</p>
+    <ol class="timeline">
+      <li><span class="yr">1963</span><p><strong>Southern California</strong>The first Coffee Bean &amp; Tea Leaf opens its doors.</p></li>
+      <li><span class="yr"><span>Dec</span>2017</span><p><strong>Islamabad</strong>Pakistan’s first store opens at Mount View Plaza, F-6.</p></li>
+      <li><span class="yr"><span>Dec</span>2020</span><p><strong>Sialkot &amp; Gujranwala</strong>Two new cities join Lahore and Islamabad.</p></li>
+      <li><span class="yr"><span>Oct</span>2022</span><p><strong>Karachi</strong>The first Karachi store opens in DHA Phase 6.</p></li>
+      <li><span class="yr"><span>Feb</span>2025</span><p><strong>Lake City, Lahore</strong>Store number 27 in Pakistan.</p></li>
+    </ol>
+  </section>
+
+  <div class="stores-wrap" id="stores">
+    <section class="band" aria-labelledby="stores-h">
+      <h2 class="sec" id="stores-h">Visit us</h2>
+      <p class="intro">A few of our stores. Every branch serves the full coffee and tea menu.</p>
+      <div class="cities">
+        <div class="city"><h3>Lahore</h3><ul>
+          <li><b>Lake City</b><span>Our 27th store in Pakistan</span></li>
+          <li><b class="placeholder">[Add branch]</b><span>[Address · hours]</span></li></ul></div>
+        <div class="city"><h3>Islamabad</h3><ul>
+          <li><b>Mount View Plaza, F-6</b><span>Where it started in Pakistan, 2017</span></li>
+          <li><b class="placeholder">[Add branch]</b><span>[Address · hours]</span></li></ul></div>
+        <div class="city"><h3>Karachi</h3><ul>
+          <li><b>Khayaban-e-Bukhari, DHA Phase 6</b><span>Plot 12-C</span></li>
+          <li><b class="placeholder">[Add branch]</b><span>[Address · hours]</span></li></ul></div>
+      </div>
+      <p class="also">Also in Sialkot and Gujranwala.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p>Design concept for demonstration only. Not the official website of The Coffee Bean &amp; Tea Leaf. Menu items are samples; replace with the current branch menu and the official logo.</p>
+  <p>Made in Lahore</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DRINKS = {
+    coffee: [
+      {id:"og", name:"Original Ice Blended", tag:"Signature", ds:"Coffee extract, milk and ice, blended until smooth.", color:0xC9A27A, cream:true, level:.88},
+      {id:"mocha", name:"Mocha Ice Blended", tag:"Signature", ds:"The original with dark chocolate blended through.", color:0x7C4A2B, cream:true, drizzle:true, level:.88},
+      {id:"latte", name:"Café Latte", ds:"A double shot of espresso with steamed milk. Hot or iced.", color:0xB98A5E, foam:true, level:.9},
+      {id:"capp", name:"Cappuccino", ds:"Espresso under a deep cap of milk foam.", color:0x9C6E46, foam:true, level:.75},
+      {id:"amer", name:"Iced Americano", ds:"Espresso lengthened with cold water, poured over ice.", color:0x3A1F10, ice:true, level:.9},
+      {id:"esp", name:"Espresso", ds:"A short, strong shot of our espresso roast.", color:0x2B160B, foam:true, level:.28}
+    ],
+    tea: [
+      {id:"chai", name:"Chai Tea Latte", tag:"Favourite", ds:"Spiced black tea with milk. Good hot or over ice.", color:0xB98458, ice:true, level:.9},
+      {id:"matcha", name:"Matcha Green Tea Latte", ds:"Stone-ground green tea whisked into milk.", color:0x8DB46A, cream:true, level:.86},
+      {id:"iced", name:"Iced Tea", ds:"Freshly brewed tea, shaken over ice.", color:0xB5651D, ice:true, level:.9},
+      {id:"eng", name:"English Breakfast", ds:"A full-bodied black tea, brewed from whole leaves.", color:0x8A4A1E, level:.82},
+      {id:"green", name:"Green Tea", ds:"Light and grassy, brewed at a lower temperature.", color:0xC9B45A, level:.82},
+      {id:"herbal", name:"Herbal Infusion", ds:"Caffeine-free blends of flowers, herbs and fruit.", color:0xB5486A, ice:true, level:.9}
+    ]
+  };
+  var copy = {
+    coffee:{swap:"poured in Pakistan.", lead:"Handpicked 100% arabica beans, roasted for espresso, lattes and our Ice Blended drinks.",
+      h:"Pulled shot by shot.", p:"Every espresso drink starts with a fresh shot of our espresso roast, pulled when you order."},
+    tea:{swap:"steeped in Pakistan.", lead:"Whole-leaf black, green and herbal teas, served hot, iced or as a latte.",
+      h:"Brewed leaf by leaf.", p:"Whole tea leaves, steeped hot or brewed strong and poured over ice."}
+  };
+
+  // Build menu lists
+  function hex(c){ return "#" + c.toString(16).padStart(6,"0"); }
+  ["coffee","tea"].forEach(function(m){
+    var ul = document.getElementById("list-" + m);
+    DRINKS[m].forEach(function(d, i){
+      var li = document.createElement("li");
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "drink"; b.dataset.drink = d.id;
+      b.setAttribute("aria-pressed", String(i === 0));
+      var dot = document.createElement("span"); dot.className = "dot"; dot.style.background = hex(d.color);
+      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = d.name;
+      var tg = document.createElement("span"); tg.className = "tag"; tg.textContent = d.tag || "";
+      var ds = document.createElement("span"); ds.className = "ds"; ds.textContent = d.ds;
+      b.append(dot, nm, tg, ds);
+      b.addEventListener("click", function(){ selectDrink(m, d.id); });
+      li.appendChild(b); ul.appendChild(li);
+    });
+  });
+
+  var mode = "coffee", mixTarget = 0, onDrink = function(){};
+  function selectDrink(m, id){
+    var d = DRINKS[m].filter(function(x){ return x.id === id; })[0];
+    document.querySelectorAll("#list-" + m + " .drink").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.drink === id)); });
+    document.getElementById("drinkName").textContent = d.name;
+    onDrink(d);
+  }
+  function setMode(m){
+    mode = m; mixTarget = m === "tea" ? 1 : 0;
+    document.body.dataset.mode = m;
+    document.querySelectorAll("[data-set-mode]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.setMode === m)); });
+    document.querySelectorAll("[data-menu]").forEach(function(el){ el.hidden = el.dataset.menu !== m; });
+    document.getElementById("swap").textContent = copy[m].swap;
+    document.getElementById("lead").textContent = copy[m].lead;
+    document.getElementById("cap1h").textContent = copy[m].h;
+    document.getElementById("cap1p").textContent = copy[m].p;
+    selectDrink(m, DRINKS[m][0].id);
+  }
+  document.querySelectorAll("[data-set-mode]").forEach(function(b){
+    b.addEventListener("click", function(){ setMode(b.dataset.setMode); });
+  });
+
+  // Captions follow scroll progress even without WebGL
+  var scrolly = document.getElementById("scrolly"), sticky = document.getElementById("sticky");
+  var caps = [].slice.call(document.querySelectorAll("[data-cap]"));
+  var hint = document.getElementById("hint");
+  function clamp(x){ return Math.min(1, Math.max(0, x)); }
+  function ss(a, b, x){ x = clamp((x - a) / (b - a)); return x * x * (3 - 2 * x); }
+  function progress(){
+    var r = scrolly.getBoundingClientRect();
+    return clamp(-r.top / Math.max(1, r.height - sticky.clientHeight));
+  }
+  var ranges = [[-1, -1, .2, .3], [.3, .4, .58, .66], [.8, .88, 2, 2]];
+  function updateCaps(p){
+    caps.forEach(function(el, i){
+      var g = ranges[i], o = Math.min(ss(g[0], g[1], p), 1 - ss(g[2], g[3], p));
+      if (i === 0 && p <= g[2]) o = 1;
+      el.style.opacity = o;
+      el.style.visibility = o < 0.02 ? "hidden" : "visible";
+      el.style.translate = "0 " + ((1 - o) * 24) + "px";
+    });
+    hint.style.opacity = 1 - ss(0.02, 0.1, p);
+  }
+  var pRaw = 0;
+  function onScroll(){ pRaw = progress(); if (!window.THREE || noGL) updateCaps(pRaw); }
+  window.addEventListener("scroll", onScroll, {passive:true});
+
+  var noGL = false;
+  function lathe(T, pts, seg){ return new T.LatheGeometry(pts.map(function(p){ return new T.Vector2(p[0], p[1]); }), seg); }
+  function lin(T, c){ return new T.Color(c).convertSRGBToLinear(); }
+  function makeRenderer(T, el){
+    var r = new T.WebGLRenderer({antialias:true, alpha:true});
+    r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    r.outputEncoding = T.sRGBEncoding;
+    el.insertBefore(r.domElement, el.firstChild);
+    return r;
+  }
+  function watch(el){
+    var s = {visible:true};
+    new IntersectionObserver(function(es){ s.visible = es[0].isIntersecting; }).observe(el);
+    return s;
+  }
+
+  /* ---------- Scene 1: the cup and the dive ---------- */
+  function heroScene(T){
+    var stage = document.getElementById("stage");
+    var renderer = makeRenderer(T, stage);
+    var scene = new T.Scene();
+    var camera = new T.PerspectiveCamera(34, 1, 0.02, 100);
+    var mobile = false, camBase = 6.4;
+
+    scene.add(new T.HemisphereLight(0xfff1e0, 0x2a1a10, 0.75));
+    var key = new T.DirectionalLight(0xffe2c0, 1.15); key.position.set(3, 5, 4); scene.add(key);
+    var rim = new T.DirectionalLight(0x9fd0a8, 0.7); rim.position.set(-4, 2, -3); scene.add(rim);
+
+    var root = new T.Group(); scene.add(root);
+    var ceramic = new T.MeshStandardMaterial({color:0xf4efe8, roughness:0.3, side:T.DoubleSide});
+    var cup = new T.Mesh(lathe(T, [[0,0],[0.55,0],[0.62,0.05],[0.72,0.4],[0.82,0.9],[0.86,1.1],[0.84,1.13],[0.79,1.09],[0.75,0.86],[0.64,0.4],[0.5,0.13],[0,0.13]], 96), ceramic);
+    cup.position.y = 0.06; root.add(cup);
+    var handle = new T.Mesh(new T.TorusGeometry(0.27, 0.06, 16, 40, Math.PI * 1.2), ceramic);
+    handle.position.set(0.86, 0.68, 0); handle.rotation.z = -Math.PI * 0.6; root.add(handle);
+    root.add(new T.Mesh(lathe(T, [[0,-0.03],[1.25,-0.03],[1.42,0.07],[1.38,0.09],[1.1,0.04],[0.62,0.02],[0,0.02]], 96), ceramic));
+
+    var coffeeCol = lin(T, 0x4a2613), teaCol = lin(T, 0xb06a1c);
+    var liquidMat = new T.MeshStandardMaterial({color:coffeeCol.clone(), roughness:0.12});
+    var liquid = new T.Mesh(new T.CircleGeometry(0.76, 96), liquidMat);
+    liquid.rotation.x = -Math.PI / 2; liquid.position.y = 0.96; root.add(liquid);
+
+    // Latte art (original tulip pour), high-res for the close-up
+    var c = document.createElement("canvas"); c.width = c.height = 1024;
+    var g = c.getContext("2d"); g.scale(2, 2);
+    var rg = g.createRadialGradient(256,256,150,256,256,256);
+    rg.addColorStop(0,"rgba(160,100,55,0)"); rg.addColorStop(1,"rgba(196,140,88,0.95)");
+    g.fillStyle = rg; g.beginPath(); g.arc(256,256,256,0,Math.PI*2); g.fill();
+    var milk = "#f2e4cf", brew = "#4a2613";
+    [[256,330,118,74],[256,238,90,58],[256,165,62,42]].forEach(function(e){
+      g.fillStyle = milk; g.beginPath(); g.ellipse(e[0],e[1],e[2],e[3],0,0,Math.PI*2); g.fill();
+      g.fillStyle = brew; g.beginPath(); g.ellipse(e[0],e[1]+e[3]*0.55,e[2]*0.72,e[3]*0.42,0,0,Math.PI*2); g.fill();
+    });
+    g.strokeStyle = milk; g.lineWidth = 7; g.beginPath(); g.moveTo(256,118); g.lineTo(256,420); g.stroke();
+    // fine crema speckle
+    for (var q = 0; q < 900; q++){
+      var ang = Math.random() * Math.PI * 2, rr = Math.sqrt(Math.random()) * 250;
+      g.fillStyle = "rgba(" + (150 + Math.random()*60|0) + ",100,55," + (Math.random()*0.25) + ")";
+      g.fillRect(256 + Math.cos(ang) * rr, 256 + Math.sin(ang) * rr, 1.5, 1.5);
+    }
+    var artTex = new T.CanvasTexture(c); artTex.encoding = T.sRGBEncoding;
+    artTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    var art = new T.Mesh(new T.CircleGeometry(0.76, 96), new T.MeshStandardMaterial({map:artTex, transparent:true, roughness:0.35}));
+    art.rotation.x = -Math.PI / 2; art.position.y = 0.962; root.add(art);
+
+    // Tea surface: soft concentric ripples
+    var tc = document.createElement("canvas"); tc.width = tc.height = 512;
+    var tg = tc.getContext("2d");
+    for (var ri = 0; ri < 9; ri++){
+      tg.strokeStyle = "rgba(255,220,160," + (0.12 - ri * 0.01) + ")"; tg.lineWidth = 6;
+      tg.beginPath(); tg.arc(256, 256, 30 + ri * 26, 0, Math.PI * 2); tg.stroke();
+    }
+    var rippleTex = new T.CanvasTexture(tc);
+    var ripple = new T.Mesh(new T.CircleGeometry(0.76, 96), new T.MeshBasicMaterial({map:rippleTex, transparent:true, opacity:0, depthWrite:false}));
+    ripple.rotation.x = -Math.PI / 2; ripple.position.y = 0.963; root.add(ripple);
+
+    // Steam
+    var sc = document.createElement("canvas"); sc.width = sc.height = 128;
+    var sg = sc.getContext("2d"), srg = sg.createRadialGradient(64,64,0,64,64,64);
+    srg.addColorStop(0,"rgba(255,255,255,0.9)"); srg.addColorStop(1,"rgba(255,255,255,0)");
+    sg.fillStyle = srg; sg.fillRect(0,0,128,128);
+    var steamTex = new T.CanvasTexture(sc), steam = [];
+    for (var i = 0; i < 9; i++){
+      var s = new T.Sprite(new T.SpriteMaterial({map:steamTex, transparent:true, depthWrite:false, opacity:0}));
+      s.userData = {phase:i / 9, x:(Math.random() - 0.5) * 0.5};
+      root.add(s); steam.push(s);
+    }
+
+    // Beans and leaves
+    var beanGeo = new T.SphereGeometry(1, 28, 18), pos = beanGeo.attributes.position;
+    for (var v = 0; v < pos.count; v++){ var x = pos.getX(v), y = pos.getY(v); if (y > 0) pos.setY(v, y - 0.45 * y * Math.exp(-(x * x) / 0.015)); }
+    beanGeo.computeVertexNormals();
+    var beanMat = new T.MeshStandardMaterial({color:lin(T, 0x5a2f17), roughness:0.45});
+    var leafShape = new T.Shape();
+    leafShape.moveTo(0,-1); leafShape.quadraticCurveTo(0.62,-0.15,0,1); leafShape.quadraticCurveTo(-0.62,-0.15,0,-1);
+    var leafGeo = new T.ShapeGeometry(leafShape, 16), lp = leafGeo.attributes.position;
+    for (var k = 0; k < lp.count; k++){ var lx = lp.getX(k); lp.setZ(k, -0.9 * lx * lx); }
+    leafGeo.computeVertexNormals();
+    var leafMat = new T.MeshStandardMaterial({color:lin(T, 0x4f8a4c), roughness:0.5, side:T.DoubleSide});
+    var floaters = [];
+    for (var n = 0; n < 14; n++){
+      var slot = new T.Group();
+      var bean = new T.Mesh(beanGeo, beanMat), leaf = new T.Mesh(leafGeo, leafMat);
+      slot.add(bean); slot.add(leaf);
+      slot.userData = {a:(n / 14) * Math.PI * 2, r:1.85 + Math.random() * 0.7, h:0.1 + Math.random() * 2.1, sp:0.25 + Math.random() * 0.25,
+        rx:Math.random() * 6, ry:Math.random() * 6, bean:bean, leaf:leaf};
+      root.add(slot); floaters.push(slot);
+    }
+
+    // Interaction
+    var targetY = 0, targetX = 0, rotY = 0, rotX = 0, spin = 0, spinVel = 0, mix = 0, p = 0;
+    var dragging = false, lastX = 0;
+    sticky.addEventListener("pointermove", function(e){
+      var r = sticky.getBoundingClientRect();
+      targetY = ((e.clientX - r.left) / r.width * 2 - 1) * 0.45;
+      targetX = ((e.clientY - r.top) / r.height * 2 - 1) * 0.12;
+      if (dragging){ spinVel = (e.clientX - lastX) * 0.012; spin += spinVel; lastX = e.clientX; }
+    });
+    stage.addEventListener("pointerdown", function(e){ dragging = true; lastX = e.clientX; spinVel = 0; });
+    window.addEventListener("pointerup", function(){ dragging = false; });
+    window.addEventListener("pointercancel", function(){ dragging = false; });
+
+    function resize(){
+      var w = stage.clientWidth, h = stage.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h; mobile = w < 900;
+      camBase = camera.aspect < 1 ? 8.2 : 6.6;
+      camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(stage); resize();
+    var vis = watch(stage);
+
+    var A = new T.Vector3(), B = new T.Vector3(), C = new T.Vector3(), cam = new T.Vector3(), look = new T.Vector3();
+    var clock = new T.Clock(), t = 0;
+    (function frame(){
+      requestAnimationFrame(frame);
+      var dt = Math.min(clock.getDelta(), 0.05);
+      p += (pRaw - p) * (reduced ? 1 : Math.min(1, dt * 7));
+      updateCaps(p);
+      if (!vis.visible) return;
+      if (!reduced) t += dt;
+      mix += (mixTarget - mix) * Math.min(1, dt * 4);
+
+      var k1 = ss(0.22, 0.58, p), k2 = ss(0.62, 0.95, p);
+
+      liquidMat.color.copy(coffeeCol).lerp(teaCol, mix);
+      art.material.opacity = 1 - mix;
+      ripple.material.opacity = mix * (0.6 + 0.4 * Math.sin(t * 2));
+      ripple.scale.setScalar(1 + (t * 0.08 % 0.15));
+      art.rotation.z = t * 0.12 + k2 * 1.6;
+
+      if (!dragging){ spin += spinVel; spinVel *= 0.94; }
+      rotY += (targetY - rotY) * 0.06; rotX += (targetX - rotX) * 0.06;
+      root.rotation.y = (rotY * (1 - k1)) + spin + t * 0.12 + k1 * 1.2;
+      root.rotation.x = rotX * (1 - k1);
+      root.position.x = mobile ? 0 : 1.35 * (1 - k1);
+      root.position.y = -0.55 + Math.sin(t * 0.9) * 0.04 * (1 - k2) + (mobile ? 0.55 * (1 - k1) : 0);
+
+      for (var i = 0; i < floaters.length; i++){
+        var f = floaters[i], d = f.userData, ang = d.a + t * d.sp * 0.4;
+        var spread = 1 + k2 * 1.5;
+        f.position.set(Math.cos(ang) * d.r * spread, d.h + Math.sin(t * d.sp * 2 + d.a) * 0.12 + k1 * 0.4, Math.sin(ang) * d.r * spread);
+        f.rotation.set(d.rx + t * d.sp, d.ry + t * d.sp * 0.7, 0);
+        var sb = Math.max(1e-4, 1 - mix), sl = Math.max(1e-4, mix);
+        d.bean.scale.set(0.16 * sb, 0.11 * sb, 0.23 * sb);
+        d.leaf.scale.setScalar(0.24 * sl);
+      }
+      for (var j = 0; j < steam.length; j++){
+        var st = steam[j], ph = reduced ? st.userData.phase : (st.userData.phase + t * 0.18) % 1;
+        st.position.set(st.userData.x + Math.sin(ph * 6 + j) * 0.12, 1.15 + ph * 1.6, Math.cos(ph * 5 + j) * 0.08);
+        st.scale.setScalar(0.35 + ph * 0.7);
+        st.material.opacity = Math.sin(ph * Math.PI) * 0.28 * (1 - k1);
+      }
+
+      // Camera path: front view -> overhead -> into the cup
+      var lx = root.position.x, surf = root.position.y + 0.96;
+      A.set(0, 1.5, camBase); B.set(0, 5.4, 1.4); C.set(0, surf + 0.16, 0.012);
+      cam.copy(A).lerp(B, k1).lerp(C, k2);
+      look.set(lx * (1 - k1) * 0, 0.35, 0).lerp(new T.Vector3(0, surf, 0), Math.max(k1, k2));
+      camera.position.copy(cam);
+      camera.lookAt(look);
+      renderer.render(scene, camera);
+    })();
+  }
+
+  /* ---------- Scene 2: the drink glass ---------- */
+  function glassScene(T){
+    var el = document.getElementById("glass");
+    var renderer = makeRenderer(T, el);
+    var scene = new T.Scene();
+    var camera = new T.PerspectiveCamera(30, 1, 0.1, 100);
+    camera.position.set(0, 2.2, 7.4); camera.lookAt(0, 1.35, 0);
+    scene.add(new T.HemisphereLight(0xffffff, 0x6b5a4a, 0.9));
+    var key = new T.DirectionalLight(0xfff0dc, 1.2); key.position.set(3, 6, 5); scene.add(key);
+    var back = new T.DirectionalLight(0xffffff, 0.8); back.position.set(-3, 3, -4); scene.add(back);
+
+    var root = new T.Group(); scene.add(root);
+    var R = function(y){ return 0.5 + 0.0545 * y; };
+
+    // Shadow disc
+    var shc = document.createElement("canvas"); shc.width = shc.height = 128;
+    var shg = shc.getContext("2d"), shr = shg.createRadialGradient(64,64,0,64,64,64);
+    shr.addColorStop(0,"rgba(0,0,0,0.35)"); shr.addColorStop(1,"rgba(0,0,0,0)");
+    shg.fillStyle = shr; shg.fillRect(0,0,128,128);
+    var shadow = new T.Mesh(new T.PlaneGeometry(2.4, 2.4), new T.MeshBasicMaterial({map:new T.CanvasTexture(shc), transparent:true, depthWrite:false}));
+    shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.001; scene.add(shadow);
+
+    // Drink
+    var drinkMat = new T.MeshStandardMaterial({color:lin(T, 0xC9A27A), roughness:0.55});
+    var drink = new T.Mesh(new T.BufferGeometry(), drinkMat); root.add(drink);
+    function drinkGeo(level){
+      var top = 0.1 + 1.95 * Math.max(0.02, level);
+      drink.geometry.dispose();
+      drink.geometry = lathe(T, [[0,0.1],[R(0.1)-0.03,0.1],[R(top)-0.03,top],[0,top]], 48);
+      return top;
+    }
+
+    // Whipped cream, foam, drizzle, ice, straw
+    var creamMat = new T.MeshStandardMaterial({color:lin(T, 0xF4EBDD), roughness:0.7});
+    var cream = new T.Group();
+    [[0.52,0.13,0.06],[0.41,0.12,0.18],[0.29,0.11,0.29],[0.16,0.09,0.38]].forEach(function(r){
+      var m = new T.Mesh(new T.TorusGeometry(r[0], r[1], 16, 48), creamMat);
+      m.rotation.x = Math.PI / 2; m.position.y = r[2]; cream.add(m);
+    });
+    var tip = new T.Mesh(new T.SphereGeometry(0.1, 16, 12), creamMat); tip.position.y = 0.46; cream.add(tip);
+    root.add(cream);
+
+    var pts = [];
+    for (var i = 0; i <= 80; i++){ var f = i / 80, a = f * Math.PI * 7; var r = 0.62 - f * 0.5; pts.push(new T.Vector3(Math.cos(a) * r, 0.08 + f * 0.42 + 0.07, Math.sin(a) * r)); }
+    var drizzle = new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(pts), 240, 0.024, 8), new T.MeshStandardMaterial({color:lin(T, 0x3A1C0C), roughness:0.25}));
+    cream.add(drizzle);
+
+    var foam = new T.Mesh(new T.CylinderGeometry(1, 1, 0.12, 48), new T.MeshStandardMaterial({color:lin(T, 0xEADBC4), roughness:0.8}));
+    root.add(foam);
+
+    var iceMat = new T.MeshStandardMaterial({color:0xffffff, roughness:0.05, transparent:true, opacity:0.45, depthWrite:false});
+    var ice = [];
+    for (var n = 0; n < 7; n++){
+      var cube = new T.Mesh(new T.BoxGeometry(0.3, 0.3, 0.3), iceMat);
+      cube.userData = {a:n * 2.1, r:0.15 + (n % 3) * 0.1, h:0.25 + (n / 7), rot:Math.random() * 3};
+      cube.renderOrder = 1; root.add(cube); ice.push(cube);
+    }
+
+    var straw = new T.Mesh(new T.CylinderGeometry(0.05, 0.05, 3.2, 20), new T.MeshStandardMaterial({color:lin(T, 0x4f8a4c), roughness:0.4}));
+    straw.position.set(0.2, 1.85, 0.08); straw.rotation.z = -0.18; root.add(straw);
+
+    // Glass
+    var glassMat = new T.MeshStandardMaterial({color:0xdfeee8, roughness:0.05, metalness:0.1, transparent:true, opacity:0.22, side:T.DoubleSide, depthWrite:false});
+    var glass = new T.Mesh(lathe(T, [[0,0],[0.5,0],[R(2.25),2.25]], 64), glassMat);
+    glass.renderOrder = 2; root.add(glass);
+    var lip = new T.Mesh(new T.TorusGeometry(R(2.25), 0.014, 8, 64), new T.MeshStandardMaterial({color:0xffffff, transparent:true, opacity:0.6}));
+    lip.rotation.x = Math.PI / 2; lip.position.y = 2.25; lip.renderOrder = 3; root.add(lip);
+    var base = new T.Mesh(new T.CylinderGeometry(0.5, 0.5, 0.1, 48), new T.MeshStandardMaterial({color:0xe6f2ee, transparent:true, opacity:0.5, roughness:0.05}));
+    base.position.y = 0.05; root.add(base);
+
+    // State and transitions
+    var cur = DRINKS.coffee[0], next = null, level = 0, levelTarget = cur.level;
+    var targetCol = lin(T, cur.color);
+    function apply(d){
+      cur = d; targetCol = lin(T, d.color);
+      if (reduced) drinkMat.color.copy(targetCol);
+      levelTarget = d.level;
+    }
+    onDrink = function(d){
+      if (reduced){ apply(d); level = d.level; return; }
+      next = d; levelTarget = 0;
+    };
+    var cs = 0, fs = 0, is = 0;
+
+    // Drag
+    var spin = 0, spinVel = 0, dragging = false, lastX = 0;
+    el.addEventListener("pointerdown", function(e){ dragging = true; lastX = e.clientX; spinVel = 0; });
+    window.addEventListener("pointermove", function(e){ if (dragging){ spinVel = (e.clientX - lastX) * 0.012; spin += spinVel; lastX = e.clientX; } });
+    window.addEventListener("pointerup", function(){ dragging = false; });
+
+    function resize(){
+      var w = el.clientWidth, h = el.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false); camera.aspect = w / h;
+      camera.position.z = camera.aspect < 0.8 ? 9.2 : 7.4;
+      camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(el); resize();
+    var vis = watch(el);
+    if (reduced){ level = cur.level; drinkMat.color.copy(targetCol); }
+
+    var clock = new T.Clock(), t = 0, lastLevel = -1;
+    (function frame(){
+      requestAnimationFrame(frame);
+      var dt = Math.min(clock.getDelta(), 0.05);
+      if (!vis.visible) return;
+      if (!reduced) t += dt;
+
+      level += (levelTarget - level) * Math.min(1, dt * (levelTarget < level ? 9 : 3.2));
+      if (next && level < 0.04){ apply(next); next = null; }
+      drinkMat.color.lerp(targetCol, Math.min(1, dt * 10));
+      var top = 0.1 + 1.95 * Math.max(0.02, level);
+      if (Math.abs(level - lastLevel) > 0.001){ drinkGeo(level); lastLevel = level; }
+
+      var full = clamp((level - 0.7 * cur.level) / (0.3 * cur.level));
+      cs += (((cur.cream && !next) ? full : 0) - cs) * Math.min(1, dt * 6);
+      fs += (((cur.foam && !next) ? full : 0) - fs) * Math.min(1, dt * 6);
+      is += (((cur.ice && !next) ? 1 : 0) - is) * Math.min(1, dt * 6);
+
+      cream.visible = cs > 0.01;
+      cream.position.y = top - 0.04; cream.scale.setScalar(Math.max(1e-4, cs));
+      drizzle.visible = !!cur.drizzle;
+      foam.visible = fs > 0.01;
+      var fr = R(top) - 0.03;
+      foam.position.y = top + 0.04; foam.scale.set(fr, Math.max(1e-4, fs), fr);
+      for (var i = 0; i < ice.length; i++){
+        var c = ice[i], d = c.userData, y = 0.25 + d.h * (top - 0.45) + Math.sin(t * 1.5 + i) * 0.03;
+        c.visible = is > 0.01 && y < top - 0.05;
+        c.position.set(Math.cos(d.a) * d.r, y, Math.sin(d.a) * d.r);
+        c.rotation.set(d.rot, d.rot * 1.3 + t * 0.2, d.rot * 0.7);
+        c.scale.setScalar(Math.max(1e-4, is));
+      }
+
+      if (!dragging){ spin += spinVel; spinVel *= 0.94; }
+      root.rotation.y = spin + t * 0.25;
+      renderer.render(scene, camera);
+    })();
+  }
+
+  try {
+    if (!window.THREE) throw new Error("three.js missing");
+    heroScene(THREE);
+    glassScene(THREE);
+  } catch (err) {
+    noGL = true;
+    document.body.classList.add("no3d");
+    document.getElementById("stage").textContent = "The 3D scenes need WebGL, which this browser has turned off.";
+  }
+  setMode("coffee");
+  onScroll();
+})();
+</script>
+</body>
+</html>
